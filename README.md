@@ -173,7 +173,7 @@ $ python ruler/gather_results_ruler.py \
 
 The `-np` flag specifies the number of parallel processes (hosts) to use for running inference. For example, if your machine has 8 GPUs:
 - `-np 8`: Launch 8 hosts, each host assigned a single GPU.
-- `-np 4`: Lauch 4 hosts, each host assigned 2 GPUs.
+- `-np 4`: Launch 4 hosts, each host assigned 2 GPUs.
 
 This is useful when you want to run star attention with bigger context block sizes or with bigger models where assigning a single GPU per host leads to out-of-memory errors.
 
