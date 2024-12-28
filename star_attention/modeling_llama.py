@@ -68,8 +68,7 @@ if dist.is_initialized():
     RANK = dist.get_rank()
     WORLD_SIZE = dist.get_world_size()
 else:
-    RANK = 0
-    WORLD_SIZE = 1
+    raise RuntimeError('Distributed environment is not initialized!')
 
 
 class StarLlamaFlashAttention2(LlamaFlashAttention2):

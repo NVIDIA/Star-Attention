@@ -22,8 +22,6 @@ from typing import List, Optional
 import torch.distributed as dist
 from tqdm import tqdm
 
-from model import DenseAttentionModel, RingAttentionModel, StarAttentionModel
-
 
 def read_jsonl(filename, num_lines=-1):
     lines = []
@@ -72,6 +70,8 @@ def load_model(
     stop_words=None,
 ):
     if attn_type == 'dense':
+        from model import DenseAttentionModel
+
         model = DenseAttentionModel(
             path=model_path,
             max_new_tokens=tokens_to_generate,
@@ -79,6 +79,8 @@ def load_model(
         )
 
     elif attn_type == 'ring':
+        from model import RingAttentionModel
+
         model = RingAttentionModel(
             path=model_path,
             max_new_tokens=tokens_to_generate,
@@ -86,6 +88,8 @@ def load_model(
         )
 
     elif attn_type == 'star':
+        from model import StarAttentionModel
+
         assert block_size > 0, 'block_size must be provided for star attention'
         model = StarAttentionModel(
             path=model_path,

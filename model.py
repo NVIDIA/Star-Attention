@@ -20,8 +20,6 @@ import torch
 import torch.distributed as dist
 from transformers import AutoTokenizer
 
-from star_attention import LlamaForCausalLM
-
 
 class DistributedInferenceBaseModel:
     def __init__(
@@ -32,6 +30,8 @@ class DistributedInferenceBaseModel:
         block_size: int = -1,
         anchor_block_size: int = -1,
     ):
+        from star_attention import LlamaForCausalLM
+
         self._init_distributed()
 
         # Setup the tokenizer
@@ -77,9 +77,7 @@ class DistributedInferenceBaseModel:
                 f'GPUs Assigned: {", ".join([str(x) for x in self.max_memory.keys()])}'
             )
         else:
-            self.max_memory = None
-            self.rank = 0
-            self.world_size = 1
+            raise RuntimeError('Distributed environment is not initialized!')
 
     def _tokenize(self, text: str) -> torch.Tensor:
         """Tokenize the input text and return the token ids
