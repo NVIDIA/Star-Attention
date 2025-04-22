@@ -4,7 +4,7 @@ This repository contains code for the paper [Star Attention: Efficient LLM Infer
 1. **Phase 1 - Context Encoding**: The context tokens are processed using blockwise-local attention, with the context segmented into blocks where each block is prefixed with an anchor block.
 2. **Phase 2 - Query Processing and Token Generation**: The query and response tokens attend to all prior cached tokens through sequence-global attention.
 
-Star Attention **improves the inference time by up to 11x** while **preserving 95-100% of accuracy**. The method is **compatible with most Transformer-based LLMs trained with global attention, operating seamlessly out-of-the-box without additional training/finetuning.** Furthermore, Star Attention is **orthogonal to other optimization methods**, including Flash Attention and KV cache compression techniques, allowing for potential combined enhancements.
+Star Attention **improves the inference time by up to 11x** while **preserving 97-100% of accuracy**. The method is **compatible with most Transformer-based LLMs trained with global attention, operating seamlessly out-of-the-box without additional training/finetuning.** Furthermore, Star Attention is **orthogonal to other optimization methods**, including Flash Attention and KV cache compression techniques, allowing for potential combined enhancements.
 
 This codebase contains the implementation of Star Attention in PyTorch using the [HuggingFace Transformers](https://github.com/huggingface/transformers) library, along with the code for launching inference with Star Attention on two benchmarks: RULER and BABILong.
 
@@ -25,32 +25,32 @@ This codebase contains the implementation of Star Attention in PyTorch using the
       </thead>
       <tbody>
           <tr>
-              <td rowspan="4">gradientai<br>Llama3-8B-Instruct-1048K</td>
+              <td rowspan="4">meta-llama<br>Llama3.1-8B-Instruct</td>
               <td style="text-align: center">16</td>
               <td style="text-align: center">4</td>
-              <td style="text-align: center">86.12</td>
-              <td style="text-align: center">+2.47%</td>
+              <td style="text-align: center">92.22</td>
+              <td style="text-align: center">-0.94%</td>
               <td style="text-align: center">1.1x</td>
           </tr>
           <tr>
               <td style="text-align: center">32</td>
               <td style="text-align: center">8</td>
-              <td style="text-align: center">82.52</td>
-              <td style="text-align: center">+1.54%</td>
+              <td style="text-align: center">87.53</td>
+              <td style="text-align: center">+1.17%</td>
               <td style="text-align: center">1.2x</td>
           </tr>
           <tr>
               <td style="text-align: center">64</td>
               <td style="text-align: center">16</td>
-              <td style="text-align: center">79.05</td>
-              <td style="text-align: center">+1.28%</td>
+              <td style="text-align: center">84.79</td>
+              <td style="text-align: center">-1.42%</td>
               <td style="text-align: center">1.8x</td>
           </tr>
           <tr>
               <td style="text-align: center">128</td>
               <td style="text-align: center">32</td>
-              <td style="text-align: center">77.39</td>
-              <td style="text-align: center">+1.23%</td>
+              <td style="text-align: center">76.31</td>
+              <td style="text-align: center">-1.90%</td>
               <td style="text-align: center">2.7x</td>
           </tr>
           <tr>
@@ -58,27 +58,27 @@ This codebase contains the implementation of Star Attention in PyTorch using the
               <td style="text-align: center">16</td>
               <td style="text-align: center">4</td>
               <td style="text-align: center">95.09</td>
-              <td style="text-align: center">-2.85%</td>
+              <td style="text-align: center">-2.71%</td>
               <td style="text-align: center">1.7x</td>
           </tr>
           <tr>
               <td style="text-align: center">32</td>
               <td style="text-align: center">8</td>
               <td style="text-align: center">94.61</td>
-              <td style="text-align: center">-2.70%</td>
+              <td style="text-align: center">-2.55%</td>
               <td style="text-align: center">2.0x</td>
           </tr>
           <tr>
               <td style="text-align: center">64</td>
               <td style="text-align: center">16</td>
               <td style="text-align: center">88.54</td>
-              <td style="text-align: center">-1.63%</td>
+              <td style="text-align: center">-1.44%</td>
               <td style="text-align: center">4.7x</td>
           </tr>
       </tbody>
   </table>
   <p align="justify">
-    <b>Table 1:</b> Star Attention vs Ring Attention (baseline) accuracy and relative inference speed-up. The Δ for Star Attention shows the relative accuracy improvement (+) or degradation (-). We set block size to one-quarter of the sequence length.  Star Attention achieves significant speedup over Ring Attention while maintaining the accuracy. For larger models, the speedup of Star Attention is even more pronounced.
+    <b>Table 1:</b> Accuracy and relative inference speedup of Star Attention compared to Ring Attention on RULER across sequence lengths from 16K to 128K. Accuracy is reported as the absolute difference from Ring Attention and speedup reflects relative improvements in inference efficiency. Star Attention significantly accelerates inference with minimal accuracy loss.
   </p>
 </div>
 <br>
@@ -88,7 +88,7 @@ This codebase contains the implementation of Star Attention in PyTorch using the
     alt="star attention accuracy on ruler and babilong"
   />
   <p align="justify">
-    <b>Figure 1:</b> Accuracy (%) of Star Attention on RULER and BABILong evaluated on sequence lengths of 16K, 32K, 64K, and 128K. In all experiments, the block size and anchor block size are set to one-quarter of the total sequence length. Results using the Llama-3-8B-Instruct-262k, Llama-3.1-8B-Instruct and Llama-3.1-8B-Base models demonstrate that Star Attention retains 95-100% of the accuracy of global attention, and in some cases, even outperform it.
+    <b>Figure 1:</b> Accuracy comparison of Star Attention and Global Attention on RULER and BABILong from 16K to 128K sequence lengths using various models. All runs use a block and anchor block size set to one-quarter of the total sequence length. Star Attention maintains 97-100% of the accuracy of global attention, and in some cases, even outperform it.
   </p>
 </div>
 
