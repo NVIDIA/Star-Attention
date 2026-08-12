@@ -121,7 +121,7 @@ $ pip install -r requirements.txt
 In a python shell, download the `punkt` tokenizer from the `nltk` library:
 ```
 import nltk
-nltk.download('punkt_tab')
+nltk.download('punkt')
 ```
 
 ### RULER Setup
